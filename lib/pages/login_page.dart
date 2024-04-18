@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -65,31 +64,34 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 alignment: Alignment.center,
                 height: 30,
-                child: const Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Informe seu email:',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Colors.white,
+                    ),
+                    hintText: 'Email',
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.white,
                       ),
                     ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        'Email',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.blue,
                       ),
                     ),
-                  ],
+                    contentPadding: EdgeInsets.only(
+                      top: -5,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
               Container(
                 width: double.infinity,
@@ -98,27 +100,34 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 alignment: Alignment.center,
                 height: 30,
-                child: const Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Informe sua senha:',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                    ),
+                    hintText: 'Senha',
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    suffixIcon: Icon(
+                      Icons.visibility,
+                      color: Colors.white,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.white,
                       ),
                     ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        'Senha',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.blue,
                       ),
                     ),
-                  ],
+                    contentPadding: EdgeInsets.only(
+                      top: -5,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -130,9 +139,30 @@ class _LoginPageState extends State<LoginPage> {
                   horizontal: 30,
                 ),
                 alignment: Alignment.center,
-                color: Colors.green,
-                height: 30,
-                child: const Text('ENTRAR'),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () => {},
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Colors.white,
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                    child: const Text(
+                      'ENTRAR',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
               ),
               Expanded(
                 child: Container(),

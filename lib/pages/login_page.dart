@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,8 +9,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String email = "";
-  String password = "";
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+
   bool isObscurePasswordText = true;
 
   @override
@@ -72,9 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.center,
                   height: 30,
                   child: TextField(
-                    onChanged: (value) {
-                      email = value;
-                    },
+                    controller: emailController,
                     style: const TextStyle(
                       color: Colors.white,
                     ),
@@ -115,9 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 30,
                   child: TextField(
                     obscureText: isObscurePasswordText,
-                    onChanged: (value) {
-                      password = value;
-                    },
+                    controller: passwordController,
                     style: const TextStyle(
                       color: Colors.white,
                     ),
@@ -172,8 +170,22 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () {
-                        print(email);
-                        print(password);
+                        if (emailController.text.trim() == 'email@email.com' &&
+                            passwordController.text.trim() == '123') {
+                          debugPrint('Login efetuado com sucesso');
+                          debugPrint(emailController.text);
+                          debugPrint(passwordController.text);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Erro ao efetuar o Login'),
+                            ),
+                          );
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:trilhaapp/service/generate_random_number_service.dart';
+import 'package:flutter/widgets.dart';
+import 'package:trilhaapp/pages/registration_data_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,8 +10,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var generatedNumber = 0;
-  var clickQuantity = 0;
+  PageController _pageViewController = PageController(initialPage: 0);
+
+  int _currentIndexPageView = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -19,62 +20,77 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Meu App'),
       ),
-      body: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'O número gerado foi: $generatedNumber',
-              style: GoogleFonts.acme(
-                fontSize: 20,
+      drawer: Drawer(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  width: double.infinity,
+                  child: const Text('Dados cadastrais'),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegistrationDataPage(
+                              text: 'Dados cadastrais',
+                            )),
+                  );
+                },
               ),
-            ),
-            Text(
-              'Foi clicado $clickQuantity vezes!',
-              style: GoogleFonts.acme(
-                fontSize: 20,
-              ),
-            ),
-            Row(
+            ],
+          ),
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView(
+              controller: _pageViewController,
+              onPageChanged: (value) {
+                setState(() {
+                  _currentIndexPageView = value;
+                });
+              },
               children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.redAccent,
-                    child: const Text('1'),
-                  ),
+                Container(
+                  color: Colors.blueGrey,
                 ),
-                Expanded(
-                  child: Container(
-                    color: Colors.blueAccent,
-                    child: const Text('2'),
-                  ),
+                Container(
+                  color: Colors.yellowAccent,
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.yellowAccent,
-                    child: const Text('3'),
-                  ),
+                Container(
+                  color: Colors.redAccent,
                 ),
               ],
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.greenAccent,
-        child: const Icon(Icons.add),
-        onPressed: () {
-          setState(() {
-            clickQuantity++;
-            generatedNumber =
-                GenerateRandomNumberService().generateRandonNumber(1000);
-          });
-        },
+          ),
+          BottomNavigationBar(
+            currentIndex: _currentIndexPageView,
+            onTap: (value) {
+              _pageViewController.jumpToPage(value);
+            },
+            items: const [
+              BottomNavigationBarItem(
+                label: 'Home1',
+                icon: Icon(Icons.home),
+              ),
+              BottomNavigationBarItem(
+                label: 'Home2',
+                icon: Icon(Icons.add),
+              ),
+              BottomNavigationBarItem(
+                label: 'Home3',
+                icon: Icon(Icons.person),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

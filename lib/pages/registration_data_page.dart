@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp/repositories/languages_repository.dart';
 import 'package:trilhaapp/repositories/level_repository.dart';
 import 'package:trilhaapp/shared/widgets/text_label.dart';
 
@@ -11,18 +12,25 @@ class RegistrationDataPage extends StatefulWidget {
 
 class _RegistrationDataPageState extends State<RegistrationDataPage> {
   final LevelRepository _levelRepository = LevelRepository();
+  final LanguagesRepository _languagesRepository = LanguagesRepository();
 
   final TextEditingController _nameController = TextEditingController(text: '');
   final TextEditingController _dateOfBirthController =
       TextEditingController(text: '');
 
   DateTime? _dateOfBirth;
-  var _levels = [];
-  var _selectedLevel;
+  List<String> _levels = [];
+  List<String> _languages = [];
+
+  late String _selectedLevel;
+  late List<String> _selectedLanguages = [];
 
   @override
   void initState() {
     _levels = _levelRepository.getLevels();
+    _languages = _languagesRepository.gerLanguages();
+
+    _selectedLevel = _levels[0];
 
     super.initState();
   }
@@ -38,8 +46,7 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
           vertical: 12,
           horizontal: 16,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             const TextLabel(
               text: 'Nome',
@@ -78,9 +85,30 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
                       value: level,
                       groupValue: _selectedLevel,
                       onChanged: (value) {
-                        print(value);
                         setState(() {
-                          _selectedLevel = value;
+                          _selectedLevel = value!;
+                        });
+                      },
+                    ),
+                  )
+                  .toList(),
+            ),
+            const TextLabel(
+              text: 'Linguagens preferidas',
+            ),
+            Column(
+              children: _languages
+                  .map(
+                    (language) => CheckboxListTile(
+                      title: Text(language),
+                      value: _selectedLanguages.contains(language),
+                      onChanged: (bool? value) {
+                        setState(() {
+                          if (value!) {
+                            _selectedLanguages.add(language);
+                          } else {
+                            _selectedLanguages.remove(language);
+                          }
                         });
                       },
                     ),

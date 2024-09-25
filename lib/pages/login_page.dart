@@ -170,22 +170,30 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () {
-                        if (emailController.text.trim() == 'email@email.com' &&
-                            passwordController.text.trim() == '123') {
-                          debugPrint('Login efetuado com sucesso');
-                          debugPrint(emailController.text);
-                          debugPrint(passwordController.text);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Erro ao efetuar o Login'),
-                            ),
-                          );
-                        }
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(),
+                          ),
+                        );
+                        // if (emailController.text.trim() == 'email@email.com' &&
+                        //     passwordController.text.trim() == '123') {
+                        //   debugPrint('Login efetuado com sucesso');
+                        //   debugPrint(emailController.text);
+                        //   debugPrint(passwordController.text);
+                        //   Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => const HomePage(),
+                        //     ),
+                        //   );
+                        // } else {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //     const SnackBar(
+                        //       content: Text('Erro ao efetuar o Login'),
+                        //     ),
+                        //   );
+                        // }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(

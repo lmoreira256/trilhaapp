@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:trilhaapp/pages/registration_data_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController _pageViewController = PageController(initialPage: 0);
+  final PageController _pageViewController = PageController(initialPage: 0);
 
   int _currentIndexPageView = 0;
 
@@ -37,9 +36,8 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const RegistrationDataPage(
-                              text: 'Dados cadastrais',
-                            )),
+                      builder: (context) => const RegistrationDataPage(),
+                    ),
                   );
                 },
               ),

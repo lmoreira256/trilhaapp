@@ -22,6 +22,7 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
   List<String> _levels = [];
   List<String> _languages = [];
   double _chosenSalary = 0;
+  int _experienceTime = 1;
 
   late String _selectedLevel;
   final List<String> _selectedLanguages = [];
@@ -34,6 +35,23 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
     _selectedLevel = _levels[0];
 
     super.initState();
+  }
+
+  List<DropdownMenuItem<int>> buildExperienceItems() {
+    var itens = <DropdownMenuItem<int>>[];
+
+    for (var i = 0; i < 50; i++) {
+      itens.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(
+            i.toString(),
+          ),
+        ),
+      );
+    }
+
+    return itens;
   }
 
   @override
@@ -127,6 +145,19 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
               onChanged: (double value) {
                 setState(() {
                   _chosenSalary = value;
+                });
+              },
+            ),
+            const TextLabel(
+              text: 'Tempo de experiência',
+            ),
+            DropdownButton(
+              value: _experienceTime,
+              isExpanded: true,
+              items: buildExperienceItems(),
+              onChanged: (value) {
+                setState(() {
+                  _experienceTime = int.parse(value.toString());
                 });
               },
             ),

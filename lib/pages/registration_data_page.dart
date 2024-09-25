@@ -21,9 +21,10 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
   DateTime? _dateOfBirth;
   List<String> _levels = [];
   List<String> _languages = [];
+  double _chosenSalary = 0;
 
   late String _selectedLevel;
-  late List<String> _selectedLanguages = [];
+  final List<String> _selectedLanguages = [];
 
   @override
   void initState() {
@@ -114,6 +115,20 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
                     ),
                   )
                   .toList(),
+            ),
+            TextLabel(
+              text:
+                  'Pretenção Salarial. R\$ ${_chosenSalary.round().toString()}',
+            ),
+            Slider(
+              min: 0,
+              max: 10000,
+              value: _chosenSalary,
+              onChanged: (double value) {
+                setState(() {
+                  _chosenSalary = value;
+                });
+              },
             ),
             TextButton(
               onPressed: () {

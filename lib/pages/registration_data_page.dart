@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp/repositories/level_repository.dart';
 import 'package:trilhaapp/shared/widgets/text_label.dart';
 
 class RegistrationDataPage extends StatefulWidget {
@@ -9,10 +10,22 @@ class RegistrationDataPage extends StatefulWidget {
 }
 
 class _RegistrationDataPageState extends State<RegistrationDataPage> {
+  final LevelRepository _levelRepository = LevelRepository();
+
   final TextEditingController _nameController = TextEditingController(text: '');
   final TextEditingController _dateOfBirthController =
       TextEditingController(text: '');
+
   DateTime? _dateOfBirth;
+  var _levels = [];
+  var _selectedLevel;
+
+  @override
+  void initState() {
+    _levels = _levelRepository.getLevels();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +47,6 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
             TextField(
               controller: _nameController,
             ),
-            const SizedBox(
-              height: 10,
-            ),
             const TextLabel(
               text: 'Data de nascimento',
             ),
@@ -55,6 +65,27 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
                   _dateOfBirth = date;
                 }
               },
+            ),
+            const TextLabel(
+              text: 'Nível de experiência',
+            ),
+            Column(
+              children: _levels
+                  .map(
+                    (level) => RadioListTile(
+                      title: Text(level),
+                      selected: _selectedLevel == level,
+                      value: level,
+                      groupValue: _selectedLevel,
+                      onChanged: (value) {
+                        print(value);
+                        setState(() {
+                          _selectedLevel = value;
+                        });
+                      },
+                    ),
+                  )
+                  .toList(),
             ),
             TextButton(
               onPressed: () {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trilhaapp/pages/registration_data_page.dart';
+import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,32 +19,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Meu App'),
       ),
-      drawer: Drawer(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  width: double.infinity,
-                  child: const Text('Dados cadastrais'),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RegistrationDataPage(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: const CustomDrawer(),
       body: Column(
         children: [
           Expanded(

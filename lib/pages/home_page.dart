@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp/pages/card_page.dart';
 import 'package:trilhaapp/pages/image_assets_page.dart';
+import 'package:trilhaapp/pages/list_view_h_page.dart';
 import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,12 +33,10 @@ class _HomePageState extends State<HomePage> {
                   _currentIndexPageView = value;
                 });
               },
-              children: [
-                const CardPage(),
-                const ImageAssetsPage(),
-                Container(
-                  color: Colors.redAccent,
-                ),
+              children: const [
+                CardPage(),
+                ImageAssetsPage(),
+                ListViewHPage(),
               ],
             ),
           ),

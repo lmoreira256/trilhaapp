@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp/pages/card_page.dart';
+import 'package:trilhaapp/pages/image_assets_page.dart';
 import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,9 +34,7 @@ class _HomePageState extends State<HomePage> {
               },
               children: [
                 const CardPage(),
-                Container(
-                  color: Colors.yellowAccent,
-                ),
+                const ImageAssetsPage(),
                 Container(
                   color: Colors.redAccent,
                 ),

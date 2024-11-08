@@ -7,23 +7,17 @@ class Task {
 
   Task(this._description, this._finished);
 
-  String getId() {
-    return _id;
-  }
+  String get id => _id;
 
-  String getDescription() {
-    return _description;
-  }
+  String get description => _description.toUpperCase();
 
-  void setDescription(String description) {
+  set description(String description) {
     _description = description;
   }
 
-  bool isFiniched() {
-    return _finished;
-  }
+  bool get isFiniched => _finished;
 
-  void setFinished(bool finished) {
+  set finished(bool finished) {
     _finished = finished;
   }
 }

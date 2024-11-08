@@ -3,6 +3,7 @@ import 'package:trilhaapp/pages/card_page.dart';
 import 'package:trilhaapp/pages/image_assets_page.dart';
 import 'package:trilhaapp/pages/list_view_horizontal_page.dart';
 import 'package:trilhaapp/pages/list_view_page.dart';
+import 'package:trilhaapp/pages/task_page.dart';
 import 'package:trilhaapp/shared/widgets/custom_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
                 ImageAssetsPage(),
                 ListViewPage(),
                 ListViewHorizontalPage(),
+                TaskPage(),
               ],
             ),
           ),
@@ -63,7 +65,11 @@ class _HomePageState extends State<HomePage> {
               ),
               BottomNavigationBarItem(
                 label: 'Home4',
-                icon: Icon(Icons.access_alarms_rounded),
+                icon: Icon(Icons.image),
+              ),
+              BottomNavigationBarItem(
+                label: 'Home5',
+                icon: Icon(Icons.task),
               ),
             ],
           ),

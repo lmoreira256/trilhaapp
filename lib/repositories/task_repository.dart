@@ -3,18 +3,28 @@ import 'package:trilhaapp/model/task.dart';
 class TaskRepository {
   final List<Task> _tasks = [];
 
-  void addTask(Task task) async {
-    await Future.delayed(const Duration(seconds: 1));
+  Future<void> add(Task task) async {
+    await Future.delayed(const Duration(milliseconds: 100));
     _tasks.add(task);
   }
 
-  void editTask(String id, bool finished) async {
-    await Future.delayed(const Duration(seconds: 1));
-    _tasks.where((task) => task.getId() == id).first.setFinished(finished);
+  Future<void> edit(String id, bool finished) async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    _tasks.where((task) => task.id == id).first.finished = finished;
   }
 
-  Future<List<Task>> listTasks() async {
-    await Future.delayed(const Duration(seconds: 1));
+  Future<List<Task>> list() async {
+    await Future.delayed(const Duration(milliseconds: 100));
     return _tasks;
+  }
+
+  Future<List<Task>> listNotFinished() async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    return _tasks.where((task) => !task.isFiniched).toList();
+  }
+
+  Future<void> remove(String id) async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    _tasks.remove(_tasks.where((task) => task.id == id).first);
   }
 }

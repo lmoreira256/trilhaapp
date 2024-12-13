@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp/pages/configuration_page.dart';
 import 'package:trilhaapp/pages/login_page.dart';
 import 'package:trilhaapp/pages/random_numbers_page.dart';
 import 'package:trilhaapp/pages/registration_data_page.dart';
@@ -76,6 +77,34 @@ class CustomDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const RegistrationDataPage(),
+                ),
+              );
+            },
+          ),
+          const Divider(),
+          InkWell(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 10,
+              ),
+              width: double.infinity,
+              child: const Row(
+                children: [
+                  Icon(Icons.album),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('Configuração'),
+                ],
+              ),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ConfigurationPage(),
                 ),
               );
             },

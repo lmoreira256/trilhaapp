@@ -1,7 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trilhaapp/services/app_storage_service.dart';
 
 class RandomNumbersPage extends StatefulWidget {
   const RandomNumbersPage({super.key});
@@ -11,9 +10,7 @@ class RandomNumbersPage extends StatefulWidget {
 }
 
 class _RandomNumbersPageState extends State<RandomNumbersPage> {
-  final randomNumberKey = 'random_number';
-  final numberClicksKey = 'number_clicks';
-  late SharedPreferences storage;
+  AppStorageService storage = AppStorageService();
 
   int? randomNumber = 0;
   int? numberClicks = 0;
@@ -25,12 +22,10 @@ class _RandomNumbersPageState extends State<RandomNumbersPage> {
   }
 
   void loadData() async {
-    storage = await SharedPreferences.getInstance();
+    randomNumber = await storage.getRandomNumber();
+    numberClicks = await storage.getNumberClicks();
 
-    setState(() {
-      randomNumber = storage.getInt(randomNumberKey);
-      numberClicks = storage.getInt(numberClicksKey);
-    });
+    setState(() {});
   }
 
   @override
@@ -72,8 +67,8 @@ class _RandomNumbersPageState extends State<RandomNumbersPage> {
               numberClicks = (numberClicks == null ? 0 : numberClicks!) + 1;
             });
 
-            storage.setInt(randomNumberKey, randomNumber!);
-            storage.setInt(numberClicksKey, numberClicks!);
+            storage.setRandomNumber(randomNumber!);
+            storage.setNumberClicks(numberClicks!);
           },
         ),
       ),

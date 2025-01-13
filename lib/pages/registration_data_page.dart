@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp/repositories/languages_repository.dart';
 import 'package:trilhaapp/repositories/level_repository.dart';
+import 'package:trilhaapp/services/app_storage_service.dart';
 import 'package:trilhaapp/shared/widgets/text_label.dart';
 
 class RegistrationDataPage extends StatefulWidget {
@@ -11,6 +12,8 @@ class RegistrationDataPage extends StatefulWidget {
 }
 
 class _RegistrationDataPageState extends State<RegistrationDataPage> {
+  AppStorageService storage = AppStorageService();
+
   final LevelRepository _levelRepository = LevelRepository();
   final LanguagesRepository _languagesRepository = LanguagesRepository();
 
@@ -25,7 +28,7 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
   int _experienceTime = 1;
 
   late String _selectedLevel;
-  final List<String> _selectedLanguages = [];
+  late List<String> _selectedLanguages = [];
 
   bool _isLoading = false;
 
@@ -37,6 +40,23 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
     _selectedLevel = _levels[0];
 
     super.initState();
+
+    loadData();
+  }
+
+  loadData() async {
+    _nameController.text = await storage.getRegistrationDataName();
+    _dateOfBirthController.text =
+        await storage.getRegistrationDataDateOfBirth();
+    if (_dateOfBirthController.text.isNotEmpty) {
+      _dateOfBirth = DateTime.parse(_dateOfBirthController.text);
+    }
+    _selectedLevel = await storage.getRegistrationDataLevelOfExperience();
+    _selectedLanguages = await storage.getRegistrationDataPreferredLanguages();
+    _chosenSalary = await storage.getRegistrationDataSalaryClaim();
+    _experienceTime = await storage.getRegistrationTimeExperience();
+
+    setState(() {});
   }
 
   List<DropdownMenuItem<int>> buildExperienceItems() {
@@ -168,7 +188,7 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
                     },
                   ),
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_nameController.text.trim().length < 3) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -199,6 +219,19 @@ class _RegistrationDataPageState extends State<RegistrationDataPage> {
 
                         return;
                       }
+
+                      await storage
+                          .setRegistrationDataName(_nameController.text);
+                      await storage
+                          .setRegistrationDataDateOfBirth(_dateOfBirth!);
+                      await storage
+                          .setRegistrationDataLevelOfExperience(_selectedLevel);
+                      await storage.setRegistrationDataPreferredLanguages(
+                          _selectedLanguages);
+                      await storage
+                          .setRegistrationDataSalaryClaim(_chosenSalary);
+                      await storage
+                          .setRegistrationDataTimeExperience(_experienceTime);
 
                       setState(() {
                         _isLoading = true;

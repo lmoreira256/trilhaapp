@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trilhaapp/services/app_storage_service.dart';
 
 class ConfigurationPage extends StatefulWidget {
   const ConfigurationPage({super.key});
@@ -9,12 +9,7 @@ class ConfigurationPage extends StatefulWidget {
 }
 
 class _ConfigurationPageState extends State<ConfigurationPage> {
-  final USER_NAME_KEY = 'USER_NAME_KEY';
-  final HEIGHT_KEY = 'HEIGHT_KEY';
-  final RECEIVE_NOTIFICATION_KEY = 'RECEIVE_NOTIFICATION_KEY';
-  final DARK_MODE_KEY = 'DARK_MODE_KEY';
-
-  late SharedPreferences storage;
+  AppStorageService storage = AppStorageService();
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController heightController = TextEditingController();
@@ -32,15 +27,12 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
   }
 
   loadData() async {
-    storage = await SharedPreferences.getInstance();
+    userNameController.text = await storage.getUserName();
+    heightController.text = storage.getHeigth().toString();
+    receivePushNotification = await storage.getReceiveNotification();
+    darkTheme = await storage.getDarkMode();
 
-    setState(() {
-      userNameController.text = storage.getString(USER_NAME_KEY) ?? '';
-      heightController.text = (storage.getDouble(HEIGHT_KEY) ?? 0).toString();
-      receivePushNotification =
-          storage.getBool(RECEIVE_NOTIFICATION_KEY) ?? false;
-      darkTheme = storage.getBool(DARK_MODE_KEY) ?? false;
-    });
+    setState(() {});
   }
 
   @override
@@ -90,8 +82,8 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
                 onPressed: () async {
                   FocusManager.instance.primaryFocus?.unfocus();
                   try {
-                    await storage.setDouble(HEIGHT_KEY,
-                        double.tryParse(heightController.text) ?? 0);
+                    await storage
+                        .setHeight(double.tryParse(heightController.text) ?? 0);
                   } catch (e) {
                     showDialog(
                         context: context,
@@ -112,11 +104,9 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
 
                     return;
                   }
-                  await storage.setString(
-                      USER_NAME_KEY, userNameController.text);
-                  await storage.setBool(
-                      RECEIVE_NOTIFICATION_KEY, receivePushNotification);
-                  await storage.setBool(DARK_MODE_KEY, darkTheme);
+                  await storage.setUserName(userNameController.text);
+                  await storage.setReceiveNotification(receivePushNotification);
+                  await storage.setDarkMode(darkTheme);
                   Navigator.pop(context);
                 },
                 child: const Text('Salvar'),

@@ -7,11 +7,17 @@ enum StorageKeyEnum {
   registrationDatePreferredLanguages,
   registrationDateSalaryClaim,
   registrationDateTimeExperience,
+  userName,
+  height,
+  receiveNotification,
+  darkMode,
+  randomNumber,
+  numberClicks,
 }
 
 class AppStorageService {
-  setRegistrationDataName(String name) async {
-    _setString(StorageKeyEnum.registrationDataNameKey.toString(), name);
+  setRegistrationDataName(String value) async {
+    _setString(StorageKeyEnum.registrationDataNameKey.toString(), value);
   }
 
   Future<String> getRegistrationDataName() async {
@@ -61,6 +67,54 @@ class AppStorageService {
 
   Future<int> getRegistrationTimeExperience() async {
     return _getInt(StorageKeyEnum.registrationDateTimeExperience.toString());
+  }
+
+  setUserName(String value) async {
+    _setString(StorageKeyEnum.userName.toString(), value);
+  }
+
+  Future<String> getUserName() async {
+    return _getString(StorageKeyEnum.userName.toString());
+  }
+
+  setHeight(double value) async {
+    _setDouble(StorageKeyEnum.height.toString(), value);
+  }
+
+  Future<double> getHeigth() async {
+    return _getDouble(StorageKeyEnum.userName.toString());
+  }
+
+  setReceiveNotification(bool value) async {
+    _setBool(StorageKeyEnum.receiveNotification.toString(), value);
+  }
+
+  Future<bool> getReceiveNotification() async {
+    return _getBool(StorageKeyEnum.receiveNotification.toString());
+  }
+
+  setDarkMode(bool value) async {
+    _setBool(StorageKeyEnum.darkMode.toString(), value);
+  }
+
+  Future<bool> getDarkMode() async {
+    return _getBool(StorageKeyEnum.darkMode.toString());
+  }
+
+  setRandomNumber(int value) async {
+    _setInt(StorageKeyEnum.randomNumber.toString(), value);
+  }
+
+  Future<int> getRandomNumber() async {
+    return _getInt(StorageKeyEnum.randomNumber.toString());
+  }
+
+  setNumberClicks(int value) async {
+    _setInt(StorageKeyEnum.numberClicks.toString(), value);
+  }
+
+  Future<int> getNumberClicks() async {
+    return _getInt(StorageKeyEnum.numberClicks.toString());
   }
 
   _setString(String key, String value) async {
